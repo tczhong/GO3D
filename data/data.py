@@ -52,7 +52,7 @@ def main():
 
     data_dir = download_data()
 
-    print("Parsing data...")
+    print('Parsing data...')
     train_points, test_points, train_labels, test_labels, CLASS_MAP = parse_dataset(
         data_dir, NUM_POINTS
     )
