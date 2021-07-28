@@ -3,9 +3,9 @@ import glob
 import trimesh
 import pickle as pkl
 import numpy as np
-# import tensorflow as tf
-# from tensorflow import keras
-# from tensorflow.keras import layers
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
 import argparse
 import yaml
 from models import model
@@ -48,10 +48,10 @@ def main():
 
 
     if args.AUGMENT == True:
-        train_dataset = train_dataset.shuffle(len(train_points)).map(augment).batch(BATCH_SIZE)
+        train_dataset = train_dataset.shuffle(len(train_points)).map(augment).batch(args.BATCH_SIZE)
     else:
-        train_dataset = train_dataset.shuffle(len(train_points)).batch(BATCH_SIZE)
-    test_dataset = test_dataset.shuffle(len(test_points)).batch(BATCH_SIZE)
+        train_dataset = train_dataset.shuffle(len(train_points)).batch(args.BATCH_SIZE)
+    test_dataset = test_dataset.shuffle(len(test_points)).batch(args.BATCH_SIZE)
 
     model_structure = model.model_build(NUM_POINTS=args.NUM_POINTS, NUM_CLASSES=args.NUM_CLASSES, PRINT=args.PRINT)
     network = model_structure.load(args.MODEL)

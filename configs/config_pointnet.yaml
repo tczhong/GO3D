@@ -8,3 +8,4 @@ Train:
 Model:
   MODEL: 'pointnet'
   LEARNING_RATE: 0.001
+  PRINT: True

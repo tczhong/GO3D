@@ -2,6 +2,7 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 from models.components import conv_bn, dense_bn, OrthogonalRegularizer, tnet
+import numpy as np
 
 class model_build():
 
@@ -26,7 +27,7 @@ class model_build():
         x = dense_bn(x, 128)
         x = layers.Dropout(0.3)(x)
 
-        outputs = layers.Dense(NUM_CLASSES, activation="softmax")(x)
+        outputs = layers.Dense(self.NUM_CLASSES, activation="softmax")(x)
 
         network = keras.Model(inputs=inputs, outputs=outputs, name="pointnet")
 
@@ -34,7 +35,7 @@ class model_build():
 
     def load(self, MODEL):
         if MODEL == 'pointnet':
-            network = pointnet()
+            network = self.pointnet()
 
         if self.PRINT == True:
             print(network.summary)
