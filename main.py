@@ -61,12 +61,15 @@ def main():
         train_dataset = train_dataset.shuffle(len(train_points)).batch(args.BATCH_SIZE)
     test_dataset = test_dataset.shuffle(len(test_points)).batch(args.BATCH_SIZE)
 
-    # Construct Model
     time_stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-    log_dir = './outputs/'+args.MODEL+'_'+time_stamp+'/'
+    output_dir = './outputs/'
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    log_dir = output_dir + args.MODEL + '_' + time_stamp + '/'
     os.mkdir(log_dir)
     print('MODEL LOGGGER:', log_dir)
 
+    # Construct Model
     model_structure = model.model_build(NUM_POINTS=args.NUM_POINTS, NUM_CLASSES=args.NUM_CLASSES,
                                         DROPOUT_RATE=args.DROPOUT_RATE, PRINT=args.PRINT)
     network = model_structure.load(MODEL=args.MODEL, log_dir=log_dir)
