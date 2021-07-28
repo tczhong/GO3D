@@ -3,6 +3,7 @@ from tensorflow import keras
 from tensorflow.keras import layers
 from models.components import conv_bn, dense_bn, OrthogonalRegularizer, tnet
 import numpy as np
+import datetime
 
 class model_build():
 
@@ -39,5 +40,9 @@ class model_build():
 
         if self.PRINT == True:
             print(network.summary)
+
+        time_stamp = datetime.strptime(date, '%Y_%m_%d_%H_%M_%s')
+        with open('./outputs/'+MODEL+'_'+time_stamp+'.txt') as fh:
+            model.summary(print_fn=lambda x: fh.write(x + '\n'))
 
         return network
