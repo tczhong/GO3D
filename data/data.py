@@ -10,8 +10,10 @@ def download_data():
         "modelnet.zip",
         "http://3dvision.princeton.edu/projects/2014/3DShapeNets/ModelNet10.zip",
         extract=True,
+        cache_dir='./data/'
     )
     data_dir = os.path.join(os.path.dirname(data_dir), "ModelNet10")
+    print(data_dir)
     return data_dir
 
 def parse_dataset(data_dir, num_points=2048):

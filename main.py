@@ -8,6 +8,7 @@ from tensorflow import keras
 from tensorflow.keras import layers
 import argparse
 import yaml
+from data import data
 from models import model
 from utils import augment
 
@@ -35,8 +36,7 @@ def main():
     class_map = None
 
     if not os.path.isfile(file_name):
-        print(file_name, ' does not exist.\n \
-              Please run ./data/data.py to downlaod the data.')
+        data.save_data(args.BATCH_SIZE)
 
     with open(file_name, 'rb') as infile:
         train_points, test_points, train_labels, test_labels, class_map = pkl.load(infile)
