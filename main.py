@@ -41,7 +41,7 @@ def main():
     class_map = None
 
     if not os.path.isfile(file_name):
-        data.save_data(args.BATCH_SIZE)
+        data.save_data(args.NUM_POINTS)
 
     with open(file_name, 'rb') as infile:
         train_points, test_points, train_labels, test_labels, class_map = pkl.load(infile)
