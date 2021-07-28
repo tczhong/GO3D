@@ -11,6 +11,9 @@ import yaml
 from models import model
 from utils import augment
 
+parser = argparse.ArgumentParser(description='Go3D')
+parser.add_argument('--config', default='./configs/config_pointnet.yaml')
+
 def main():
     global args
     args = parser.parse_args()
@@ -44,7 +47,7 @@ def main():
     test_dataset = tf.data.Dataset.from_tensor_slices((test_points, test_labels))
 
 
-    if args.AUGMENT = True:
+    if args.AUGMENT == True:
         train_dataset = train_dataset.shuffle(len(train_points)).map(augment).batch(BATCH_SIZE)
     else:
         train_dataset = train_dataset.shuffle(len(train_points)).batch(BATCH_SIZE)

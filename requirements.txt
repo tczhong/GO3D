@@ -1,7 +1,6 @@
-glob
 numpy
 tensorflow
 trimesh
 matplotlib
 argparse
-yaml
+pyyaml

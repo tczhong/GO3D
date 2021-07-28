@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-from components import conv_bn, dense_bn, OrthogonalRegularizer, tnet
+from models.components import conv_bn, dense_bn, OrthogonalRegularizer, tnet
 
 class model_build():
 
@@ -33,10 +33,10 @@ class model_build():
         return network
 
     def load(self, MODEL):
-        if MODEL = 'pointnet':
-            model = pointnet()
+        if MODEL == 'pointnet':
+            network = pointnet()
 
-        if self.PRINT = True:
+        if self.PRINT == True:
             print(network.summary)
 
         return network
