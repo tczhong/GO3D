@@ -13,6 +13,8 @@ from models import model
 from utils import augment
 from datetime import datetime
 
+print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
+
 parser = argparse.ArgumentParser(description='Go3D')
 parser.add_argument('--config', default='./configs/config_pointnet.yaml')
 

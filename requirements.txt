@@ -1,5 +1,5 @@
 numpy
-tensorflow
+tensorflow-gpu
 trimesh
 matplotlib
 argparse
