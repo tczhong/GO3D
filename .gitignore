@@ -131,6 +131,7 @@ dmypy.json
 # Saved data file
 *.pkl
 data/datasets/
+data/images/
 
 # Ignore idea
 .idea/

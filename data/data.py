@@ -72,16 +72,13 @@ def save_data(num_points = 2048):
     print('Downloading data...')
     data_dir = download_data()
 
-    # print('Parsing data...')
-    # train_points, test_points, train_labels, test_labels, class_map = parse_dataset(
-    #     data_dir, num_points
-    # )
+    print('Parsing data...')
+    train_points, test_points, train_labels, test_labels, class_map = parse_dataset(
+        data_dir, num_points
+    )
 
-    # with open('./data/parsed_data.pkl', 'wb') as outfile:
-    #     pkl.dump((train_points, test_points, train_labels, test_labels, class_map), outfile, pkl.HIGHEST_PROTOCOL)
-
-    class_map = ['bathtub', 'bed', 'chair', 'desk', 'dresser',
-                 'monitor', 'night_stand', 'sofa', 'table', 'toilet']
+    with open('./data/parsed_data.pkl', 'wb') as outfile:
+        pkl.dump((train_points, test_points, train_labels, test_labels, class_map), outfile, pkl.HIGHEST_PROTOCOL)
 
     save_image(class_map, data_dir, num_points)
 
