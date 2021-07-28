@@ -10,4 +10,5 @@ cd ..
 
 python main.py --config ./configs/<config_files>
 
-
+load_ext tensorboard
+tensorboard --logdir <log_dir>

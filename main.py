@@ -14,6 +14,9 @@ from utils import augment
 parser = argparse.ArgumentParser(description='Go3D')
 parser.add_argument('--config', default='./configs/config_pointnet.yaml')
 
+tf.random.set_seed(42)
+log_dir = './outputs/'
+
 def main():
     global args
     args = parser.parse_args()
@@ -53,7 +56,8 @@ def main():
         train_dataset = train_dataset.shuffle(len(train_points)).batch(args.BATCH_SIZE)
     test_dataset = test_dataset.shuffle(len(test_points)).batch(args.BATCH_SIZE)
 
-    model_structure = model.model_build(NUM_POINTS=args.NUM_POINTS, NUM_CLASSES=args.NUM_CLASSES, PRINT=args.PRINT)
+    model_structure = model.model_build(NUM_POINTS=args.NUM_POINTS, NUM_CLASSES=args.NUM_CLASSES,
+                                        DROPOUT_RATE=args.DROPOUT_RATE, PRINT=args.PRINT)
     network = model_structure.load(args.MODEL)
 
     network.compile(
@@ -62,7 +66,9 @@ def main():
         metrics=["sparse_categorical_accuracy"],
     )
 
-    network.fit(train_dataset, epochs=args.EPOCHS, validation_data=test_dataset)
+    tensorboard_callback = keras.callbacks.TensorBoard(log_dir=log_dir)
+    network.fit(train_dataset, epochs=args.EPOCHS, validation_data=test_dataset,
+                callbacks=tensorboard_callback)
 
 
 if __name__=="__main__":

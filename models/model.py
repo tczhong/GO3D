@@ -3,14 +3,15 @@ from tensorflow import keras
 from tensorflow.keras import layers
 from models.components import conv_bn, dense_bn, OrthogonalRegularizer, tnet
 import numpy as np
-import datetime
+from datetime import datetime
 
 class model_build():
 
-    def __init__(self, NUM_POINTS, NUM_CLASSES, PRINT):
+    def __init__(self, NUM_POINTS, NUM_CLASSES, PRINT, DROPOUT_RATE):
         self.NUM_POINTS = NUM_POINTS
         self.NUM_CLASSES = NUM_CLASSES
         self.PRINT = PRINT
+        self.DROPOUT_RATE
 
     def pointnet(self):
         inputs = keras.Input(shape=(self.NUM_POINTS, 3))
@@ -24,9 +25,9 @@ class model_build():
         x = conv_bn(x, 512)
         x = layers.GlobalMaxPooling1D()(x)
         x = dense_bn(x, 256)
-        x = layers.Dropout(0.3)(x)
+        x = layers.Dropout(self.DROPOUT_RATE)(x)
         x = dense_bn(x, 128)
-        x = layers.Dropout(0.3)(x)
+        x = layers.Dropout(self.DROPOUT_RATE)(x)
 
         outputs = layers.Dense(self.NUM_CLASSES, activation="softmax")(x)
 
@@ -41,8 +42,8 @@ class model_build():
         if self.PRINT == True:
             print(network.summary)
 
-        time_stamp = datetime.strptime(date, '%Y_%m_%d_%H_%M_%s')
-        with open('./outputs/'+MODEL+'_'+time_stamp+'.txt') as fh:
-            model.summary(print_fn=lambda x: fh.write(x + '\n'))
+        time_stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+        with open('./outputs/'+MODEL+'_'+time_stamp+'.txt', 'w') as fh:
+            network.summary(print_fn=lambda x: fh.write(x + '\n'))
 
         return network
