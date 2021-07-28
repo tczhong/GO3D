@@ -11,7 +11,7 @@ class model_build():
         self.NUM_POINTS = NUM_POINTS
         self.NUM_CLASSES = NUM_CLASSES
         self.PRINT = PRINT
-        self.DROPOUT_RATE
+        self.DROPOUT_RATE = DROPOUT_RATE
 
     def pointnet(self):
         inputs = keras.Input(shape=(self.NUM_POINTS, 3))
@@ -35,15 +35,16 @@ class model_build():
 
         return network
 
-    def load(self, MODEL):
+    def load(self, MODEL, log_dir):
         if MODEL == 'pointnet':
             network = self.pointnet()
+        else:
+            print('Invalid MODEL...')
 
         if self.PRINT == True:
             print(network.summary)
 
-        time_stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-        with open('./outputs/'+MODEL+'_'+time_stamp+'.txt', 'w') as fh:
+        with open(log_dir+MODEL+'_model_summary.txt', 'w') as fh:
             network.summary(print_fn=lambda x: fh.write(x + '\n'))
 
         return network

@@ -11,12 +11,13 @@ import yaml
 from data import data
 from models import model
 from utils import augment
+from datetime import datetime
 
 parser = argparse.ArgumentParser(description='Go3D')
 parser.add_argument('--config', default='./configs/config_pointnet.yaml')
 
 tf.random.set_seed(42)
-log_dir = './outputs/'
+
 
 def main():
     global args
@@ -27,6 +28,8 @@ def main():
     for key in config:
         for k,v in config[key].items():
             setattr(args, k, v)
+
+    # Load Data
 
     file_name = './data/parsed_data.pkl'
     train_points = None
@@ -56,9 +59,15 @@ def main():
         train_dataset = train_dataset.shuffle(len(train_points)).batch(args.BATCH_SIZE)
     test_dataset = test_dataset.shuffle(len(test_points)).batch(args.BATCH_SIZE)
 
+    # Construct Model
+    time_stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    log_dir = './outputs/'+args.MODEL+'_'+time_stamp+'/'
+    os.mkdir(log_dir)
+    print('MODEL LOGGGER:', log_dir)
+
     model_structure = model.model_build(NUM_POINTS=args.NUM_POINTS, NUM_CLASSES=args.NUM_CLASSES,
                                         DROPOUT_RATE=args.DROPOUT_RATE, PRINT=args.PRINT)
-    network = model_structure.load(args.MODEL)
+    network = model_structure.load(MODEL=args.MODEL, log_dir=log_dir)
 
     network.compile(
         loss="sparse_categorical_crossentropy",
@@ -66,10 +75,14 @@ def main():
         metrics=["sparse_categorical_accuracy"],
     )
 
-    tensorboard_callback = keras.callbacks.TensorBoard(log_dir=log_dir)
-    network.fit(train_dataset, epochs=args.EPOCHS, validation_data=test_dataset,
-                callbacks=tensorboard_callback)
+    model_callbacks = [
+        keras.callbacks.TensorBoard(log_dir=log_dir),
+        keras.callbacks.ModelCheckpoint(filepath=log_dir+args.MODEL+'_{epoch:02d}.h5'),
+        keras.callbacks.CSVLogger(filename=log_dir+'model_training.log')
+    ]
 
+    network.fit(train_dataset, epochs=args.EPOCHS, validation_data=test_dataset,
+                callbacks=model_callbacks)
 
 if __name__=="__main__":
     main()
