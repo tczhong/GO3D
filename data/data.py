@@ -47,18 +47,16 @@ def parse_dataset(data_dir, num_points=2048):
         class_map,
     )
 
-def main():
-    NUM_POINTS = 2048
-
+def save_data(num_points = 2048):
     data_dir = download_data()
 
     print('Parsing data...')
     train_points, test_points, train_labels, test_labels, CLASS_MAP = parse_dataset(
-        data_dir, NUM_POINTS
+        data_dir, num_points
     )
 
     with open('parsed_data.pkl', 'wb') as outfile:
         pkl.dump((train_points, test_points, train_labels, test_labels, CLASS_MAP), outfile, pkl.HIGHEST_PROTOCOL)
     
 if __name__=="__main__":
-    main()
+    save_data()
