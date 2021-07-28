@@ -8,7 +8,7 @@ import numpy as np
 # from tensorflow.keras import layers
 import argparse
 import yaml
-from models import model_build
+from models import model
 
 def main():
     global args
@@ -19,7 +19,7 @@ def main():
     for key in config:
         for k,v in config[key].items():
             setattr(args, k, v)
-    
+
     file_name = './data/parsed_data.pkl'
     train_points = None
     test_points = None
@@ -39,16 +39,16 @@ def main():
         print('train_labels:', train_labels.shape)
         print('test_labels:', test_labels.shape)
 
-    model_build(NUM_POINTS=args.NUM_POINTS, NUM_CLASSES=args.NUM_CLASSES, PRINT=args.PRINT)
-    model = model_build.load(args.MODEL)
+    model_structure = model.model_build(NUM_POINTS=args.NUM_POINTS, NUM_CLASSES=args.NUM_CLASSES, PRINT=args.PRINT)
+    network = model_structure.load(args.MODEL)
 
-    model.compile(
+    network.compile(
         loss="sparse_categorical_crossentropy",
         optimizer=keras.optimizers.Adam(learning_rate=args.LEARNING_RATE),
         metrics=["sparse_categorical_accuracy"],
     )
 
-    model.fit(train_dataset, epochs=args.EPOCHS, validation_data=test_dataset)
+    network.fit(train_dataset, epochs=args.EPOCHS, validation_data=test_dataset)
 
 
 if __name__=="__main__":
