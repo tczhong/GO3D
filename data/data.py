@@ -4,6 +4,7 @@ import trimesh
 import numpy as np
 import pickle as pkl
 import tensorflow as tf
+from matplotlib import pyplot as plt
 
 def download_data():
     data_dir = tf.keras.utils.get_file(
@@ -13,11 +14,10 @@ def download_data():
         cache_dir='./data/'
     )
     data_dir = os.path.join(os.path.dirname(data_dir), "ModelNet10")
-    print(data_dir)
+    print("Saving file to directory: ", data_dir)
     return data_dir
 
 def parse_dataset(data_dir, num_points=2048):
-
     train_points = []
     train_labels = []
     test_points = []
@@ -49,16 +49,38 @@ def parse_dataset(data_dir, num_points=2048):
         class_map,
     )
 
+def save_image(class_map, data_dir='./data/datasets/ModelNet10', num_points=2048, num_per_obj=3):
+    file_dir = "./data/images/"
+    if not os.path.exists(file_dir):
+        os.makedirs(file_dir)
+
+    for obj in class_map:
+        print("Saving images for", obj)
+        for i in range(1, num_per_obj+1):
+            file_name = obj + "_000" + str(i)
+            mesh = trimesh.load(os.path.join(data_dir, obj + "/train/" + file_name + ".off"))
+            points = mesh.sample(num_points)
+
+            fig = plt.figure(figsize=(5, 5))
+            ax = fig.add_subplot(111, projection="3d")
+            ax.scatter(points[:, 0], points[:, 1], points[:, 2])
+            ax.set_axis_off()
+            plt.savefig(file_dir+file_name+'.png')
+            plt.close()
+
 def save_data(num_points = 2048):
     data_dir = download_data()
 
     print('Parsing data...')
-    train_points, test_points, train_labels, test_labels, CLASS_MAP = parse_dataset(
+    train_points, test_points, train_labels, test_labels, class_map = parse_dataset(
         data_dir, num_points
     )
 
-    with open('parsed_data.pkl', 'wb') as outfile:
-        pkl.dump((train_points, test_points, train_labels, test_labels, CLASS_MAP), outfile, pkl.HIGHEST_PROTOCOL)
-    
+    with open('./data/parsed_data.pkl', 'wb') as outfile:
+        pkl.dump((train_points, test_points, train_labels, test_labels, class_map), outfile, pkl.HIGHEST_PROTOCOL)
+
+    save_image(data_dir, class_map, num_points)
+
+
 if __name__=="__main__":
     save_data()
