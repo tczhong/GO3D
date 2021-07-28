@@ -1,4 +1,9 @@
-NUM_POINTS = 2048
-NUM_CLASSES = 10
-BATCH_SIZE = 3
-MODEL = 'pointnet'
+Train:
+  NUM_POINTS = 2048
+  NUM_CLASSES = 10
+  BATCH_SIZE = 3
+  EPOCHS = 20
+
+Model:
+  MODEL = 'pointnet'
+  LEARNING_RATE = 0.001

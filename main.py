@@ -3,11 +3,23 @@ import glob
 import trimesh
 import pickle as pkl
 import numpy as np
-import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import layers
+# import tensorflow as tf
+# from tensorflow import keras
+# from tensorflow.keras import layers
+import argparse
+import yaml
+from models import model_build
 
 def main():
+    global args
+    args = parser.parse_args()
+    with open(args.config) as f:
+        config = yaml.load(f)
+
+    for key in config:
+        for k,v in config[key].items():
+            setattr(args, k, v)
+    
     file_name = './data/parsed_data.pkl'
     train_points = None
     test_points = None
@@ -26,6 +38,18 @@ def main():
         print('test_points:', test_points.shape)
         print('train_labels:', train_labels.shape)
         print('test_labels:', test_labels.shape)
+
+    model_build(NUM_POINTS=args.NUM_POINTS, NUM_CLASSES=args.NUM_CLASSES, PRINT=args.PRINT)
+    model = model_build.load(args.MODEL)
+
+    model.compile(
+        loss="sparse_categorical_crossentropy",
+        optimizer=keras.optimizers.Adam(learning_rate=args.LEARNING_RATE),
+        metrics=["sparse_categorical_accuracy"],
+    )
+
+    model.fit(train_dataset, epochs=args.EPOCHS, validation_data=test_dataset)
+
 
 if __name__=="__main__":
     main()
