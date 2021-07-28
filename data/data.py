@@ -69,6 +69,7 @@ def save_image(class_map, data_dir='./data/datasets/ModelNet10', num_points=2048
             plt.close()
 
 def save_data(num_points = 2048):
+    print('Downloading data...')
     data_dir = download_data()
 
     print('Parsing data...')
