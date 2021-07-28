@@ -9,6 +9,7 @@ import numpy as np
 import argparse
 import yaml
 from models import model
+from utils import augment
 
 def main():
     global args
@@ -38,6 +39,16 @@ def main():
         print('test_points:', test_points.shape)
         print('train_labels:', train_labels.shape)
         print('test_labels:', test_labels.shape)
+
+    train_dataset = tf.data.Dataset.from_tensor_slices((train_points, train_labels))
+    test_dataset = tf.data.Dataset.from_tensor_slices((test_points, test_labels))
+
+
+    if args.AUGMENT = True:
+        train_dataset = train_dataset.shuffle(len(train_points)).map(augment).batch(BATCH_SIZE)
+    else:
+        train_dataset = train_dataset.shuffle(len(train_points)).batch(BATCH_SIZE)
+    test_dataset = test_dataset.shuffle(len(test_points)).batch(BATCH_SIZE)
 
     model_structure = model.model_build(NUM_POINTS=args.NUM_POINTS, NUM_CLASSES=args.NUM_CLASSES, PRINT=args.PRINT)
     network = model_structure.load(args.MODEL)

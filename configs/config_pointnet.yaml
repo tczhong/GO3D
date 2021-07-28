@@ -3,6 +3,7 @@ Train:
   NUM_CLASSES = 10
   BATCH_SIZE = 3
   EPOCHS = 20
+  AUGMENT = True
 
 Model:
   MODEL = 'pointnet'
