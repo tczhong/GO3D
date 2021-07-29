@@ -46,7 +46,6 @@ def main():
 
     with open(data_file_name, 'rb') as infile:
         train_points, test_points, train_labels, test_labels, class_map = pkl.load(infile)
-        print('class_map:', class_map)
         print('train_points:', train_points.shape)
         print('test_points:', test_points.shape)
         print('train_labels:', train_labels.shape)
