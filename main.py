@@ -33,7 +33,7 @@ def main():
 
     # Load Data
 
-    file_name = './data/parsed_data.pkl'
+    file_name = './data/parsed_data_' + args.NUM_POINTS + '.pkl'
     train_points = None
     test_points = None
     train_labels = None

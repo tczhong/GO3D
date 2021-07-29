@@ -77,7 +77,7 @@ def save_data(num_points = 2048):
         data_dir, num_points
     )
 
-    with open('./data/parsed_data.pkl', 'wb') as outfile:
+    with open('./data/parsed_data_' + num_points + '.pkl', 'wb') as outfile:
         pkl.dump((train_points, test_points, train_labels, test_labels, class_map), outfile, pkl.HIGHEST_PROTOCOL)
 
     save_image(class_map, data_dir, num_points)

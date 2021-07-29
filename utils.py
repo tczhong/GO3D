@@ -11,7 +11,9 @@ def augment(points, label):
     points = tf.random.shuffle(points)
     return points, label
 
-def save_prediction_image(model, test_dataset, class_map, log_dir):    
+def save_prediction_image(model, test_dataset, class_map, log_dir):
+    print('Saving prediction image...')
+
     data = test_dataset.take(1)
 
     points, labels = list(data)[0]
