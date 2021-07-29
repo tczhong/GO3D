@@ -41,5 +41,6 @@ root:                 model execute script and tools
   |--data:            data rendering scripts
       |--datasets:    saved data 
       |--image:       saved images
+  |--models:          model construction in keras
   |--outputs:         model outputs: parameter json file, model structure summary, model outputs
 ```
