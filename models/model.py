@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-from models.components import conv_bn, dense_bn, OrthogonalRegularizer, tnet
+from models.components import conv_bn, dense_bn, OrthogonalRegularizer, tnet, tnet_full
 import numpy as np
 from datetime import datetime
 
