@@ -7,6 +7,6 @@ Train:
 
 Model:
   MODEL: 'pointnet_mod'
-  LEARNING_RATE: 0.05
+  LEARNING_RATE: 0.005
   DROPOUT_RATE: 0.3
   PRINT: True
