@@ -10,7 +10,7 @@ import argparse
 import yaml
 from data import data
 from models import model
-from utils import augment
+from utils import augment, save_prediction_image
 from datetime import datetime
 
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
@@ -88,6 +88,8 @@ def main():
 
     network.fit(train_dataset, epochs=args.EPOCHS, validation_data=test_dataset,
                 callbacks=model_callbacks)
+    
+    save_prediction_image(network, test_dataset, class_map, log_dir)
 
 if __name__=="__main__":
     main()
