@@ -4,8 +4,9 @@ ModelNet 3D object classification
 https://github.gatech.edu/tzhong9/Go3D.git
 ```
 3D objectives CAD data:
+```
 https://modelnet.cs.princeton.edu/
-
+```
 To setup GPU for Tensorflow:
 ```
 https://www.tensorflow.org/install/gpu
