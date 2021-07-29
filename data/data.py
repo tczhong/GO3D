@@ -54,7 +54,7 @@ def save_image(class_map, data_dir='./data/datasets/ModelNet10', num_points=2048
     if not os.path.exists(file_dir):
         os.makedirs(file_dir)
 
-    for obj in class_map:
+    for key, obj in class_map:
         print("Saving images for", obj)
         for i in range(1, num_per_obj+1):
             file_name = obj + "_000" + str(i)
@@ -76,6 +76,8 @@ def save_data(num_points = 2048):
     train_points, test_points, train_labels, test_labels, class_map = parse_dataset(
         data_dir, num_points
     )
+
+    print('Class map:', class_map)
 
     with open('./data/parsed_data_' + str(num_points) + '.pkl', 'wb') as outfile:
         pkl.dump((train_points, test_points, train_labels, test_labels, class_map), outfile, pkl.HIGHEST_PROTOCOL)

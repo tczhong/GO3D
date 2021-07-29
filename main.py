@@ -33,18 +33,18 @@ def main():
 
     # Load Data
 
-    #file_name = './data/parsed_data_' + str(args.NUM_POINTS) + '.pkl'
-    file_name = './data/parsed_data.pkl'
+    data_file_name = './data/parsed_data_' + str(args.NUM_POINTS) + '.pkl'
+    # data_file_name = './data/parsed_data.pkl'
     train_points = None
     test_points = None
     train_labels = None
     test_labels = None
     class_map = None
 
-    if not os.path.isfile(file_name):
+    if not os.path.isfile(data_file_name):
         data.save_data(args.NUM_POINTS)
 
-    with open(file_name, 'rb') as infile:
+    with open(data_file_name, 'rb') as infile:
         train_points, test_points, train_labels, test_labels, class_map = pkl.load(infile)
         print('class_map:', class_map)
         print('train_points:', train_points.shape)
