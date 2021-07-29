@@ -89,9 +89,10 @@ def main():
 
     network.fit(train_dataset, epochs=args.EPOCHS, validation_data=test_dataset,
                 callbacks=model_callbacks)
-    network.save(log_dir)
-    
-    save_prediction_image(network, test_dataset, class_map, log_dir)
+
+    # keras.models.save_model(
+    #     model=network, filepath=log_dir
+    # )
 
 if __name__=="__main__":
     main()

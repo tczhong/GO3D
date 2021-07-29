@@ -47,7 +47,9 @@ class model_build():
         x = conv_bn(x, 1024)
         x = layers.GlobalMaxPooling1D()(x)
         x = dense_bn(x, 512)
+        x = layers.Dropout(self.DROPOUT_RATE)(x)
         x = dense_bn(x, 256)
+        x = layers.Dropout(self.DROPOUT_RATE)(x)
 
         outputs = layers.Dense(self.NUM_CLASSES, activation="softmax")(x)
 
