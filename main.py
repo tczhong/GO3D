@@ -99,7 +99,7 @@ def main():
     #     model=network, filepath=log_dir
     # )
 
-
+    save_prediction_image(network, test_dataset, class_map, log_dir)
 
 if __name__=="__main__":
     main()
