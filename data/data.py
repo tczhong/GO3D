@@ -54,7 +54,7 @@ def save_image(class_map, data_dir='./data/datasets/ModelNet10', num_points=2048
     if not os.path.exists(file_dir):
         os.makedirs(file_dir)
 
-    for key, obj in class_map:
+    for key, obj in class_map.items():
         print("Saving images for", obj)
         for i in range(1, num_per_obj+1):
             file_name = obj + "_000" + str(i)
