@@ -33,7 +33,7 @@ def main():
 
     # Load Data
 
-    file_name = './data/parsed_data_' + args.NUM_POINTS + '.pkl'
+    file_name = './data/parsed_data_' + str(args.NUM_POINTS) + '.pkl'
     train_points = None
     test_points = None
     train_labels = None
@@ -82,7 +82,7 @@ def main():
 
     model_callbacks = [
         keras.callbacks.TensorBoard(log_dir=log_dir),
-        #keras.callbacks.ModelCheckpoint(filepath=log_dir+args.MODEL+'_{epoch:02d}.h5'),
+        keras.callbacks.ModelCheckpoint(filepath=args.MODEL+'_{epoch:02d}.h5'),
         keras.callbacks.CSVLogger(filename=log_dir+'model_training.log')
     ]
 

@@ -13,7 +13,7 @@ class model_build():
         self.PRINT = PRINT
         self.DROPOUT_RATE = DROPOUT_RATE
 
-    def pointnet(self):
+    def pointnet_mod(self):
         inputs = keras.Input(shape=(self.NUM_POINTS, 3))
 
         x = tnet(inputs, 3)
@@ -31,13 +31,36 @@ class model_build():
 
         outputs = layers.Dense(self.NUM_CLASSES, activation="softmax")(x)
 
-        network = keras.Model(inputs=inputs, outputs=outputs, name="pointnet")
+        network = keras.Model(inputs=inputs, outputs=outputs, name="pointnet_mod")
 
         return network
+
+    def pointnet(self):
+        inputs = keras.Input(shape=(self.NUM_POINTS, 3))
+
+        x = tnet_full(inputs, 3)
+        x = conv_bn(x, 64)
+        x = conv_bn(x, 64)
+        x = tnet_full(x, 64)
+        x = conv_bn(x, 64)
+        x = conv_bn(x, 128)
+        x = conv_bn(x, 1024)
+        x = layers.GlobalMaxPooling1D()(x)
+        x = dense_bn(x, 512)
+        x = dense_bn(x, 256)
+
+        outputs = layers.Dense(self.NUM_CLASSES, activation="softmax")(x)
+
+        network = keras.Model(inputs=inputs, outputs=outputs, name="pointnet_mod")
+
+        return network
+
 
     def load(self, MODEL, log_dir):
         if MODEL == 'pointnet':
             network = self.pointnet()
+        elif MODEL == 'pointnet_mod':
+            network = self.pointnet_mod()
         else:
             print('Invalid MODEL...')
 
