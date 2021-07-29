@@ -24,6 +24,9 @@ class OrthogonalRegularizer(keras.regularizers.Regularizer):
         xxt = tf.tensordot(x, x, axes=(2, 2))
         xxt = tf.reshape(xxt, (-1, self.num_features, self.num_features))
         return tf.reduce_sum(self.l2reg * tf.square(xxt - self.eye))
+    
+    def get_config(self):
+        return {'num_features': self.num_features, 'l2': float(self.l2reg)}
 
 def tnet(inputs, num_features):
 
