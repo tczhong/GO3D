@@ -6,6 +6,9 @@ https://github.gatech.edu/tzhong9/Go3D.git
 To setup GPU for Tensorflow:
 https://www.tensorflow.org/install/gpu
 
+Linux GPU setup:
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
+
 ```
 conda create -n go3d python=3.8
 conda activate go3d
