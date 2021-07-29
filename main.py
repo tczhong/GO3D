@@ -12,6 +12,7 @@ from data import data
 from models import model
 from utils import augment, save_prediction_image
 from datetime import datetime
+import json
 
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
@@ -23,6 +24,7 @@ tf.random.set_seed(42)
 
 def main():
     global args
+    para = {}
     args = parser.parse_args()
     with open(args.config) as f:
         config = yaml.load(f)
@@ -30,6 +32,7 @@ def main():
     for key in config:
         for k,v in config[key].items():
             setattr(args, k, v)
+            para[k] = v
 
     # Load Data
 
@@ -68,6 +71,9 @@ def main():
     log_dir = output_dir + args.MODEL + '_' + time_stamp + '/'
     os.mkdir(log_dir)
     print('MODEL LOGGGER:', log_dir)
+
+    with open(log_dir + 'model_parameter.json', 'w') as fp:
+        json.dump(para, fp)
 
     # Construct Model
     model_structure = model.model_build(NUM_POINTS=args.NUM_POINTS, NUM_CLASSES=args.NUM_CLASSES,
