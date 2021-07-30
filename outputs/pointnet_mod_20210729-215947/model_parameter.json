@@ -1,0 +1,1 @@
+{"NUM_POINTS": 1024, "NUM_CLASSES": 10, "BATCH_SIZE": 32, "EPOCHS": 30, "AUGMENT": false, "MODEL": "pointnet_mod", "LEARNING_RATE": 0.0005, "DROPOUT_RATE": 0.5, "PRINT": true}
