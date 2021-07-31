@@ -3,6 +3,7 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 from matplotlib import pyplot as plt
+from sklearn.metrics import confusion_matrix
 
 def augment(points, label):
     # jitter points
@@ -39,3 +40,9 @@ def save_prediction_image(model, test_dataset, class_map, log_dir):
         ax.set_axis_off()
     plt.savefig(log_dir+'prediction.png')
     plt.close()
+
+def save_confusion_matrix(model, validation_points, validation_label, log_dir): 
+    pred_scores = model.predict(validation_points)
+    preds = tf.math.argmax(pred_scores, -1)
+    mat = confusion_matrix(validation_label, preds)
+    np.savetxt(log_dir+'confusion_matrix.txt', mat, fmt='%d', delimiter='\t')

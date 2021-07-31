@@ -10,7 +10,7 @@ import argparse
 import yaml
 from data import data
 from models import model
-from utils import augment, save_prediction_image
+from utils import augment, save_prediction_image, save_confusion_matrix
 from datetime import datetime
 import json
 
@@ -100,6 +100,8 @@ def main():
     )
 
     save_prediction_image(network, test_dataset, class_map, log_dir)
+    save_confusion_matrix(network, test_points, test_labels, log_dir)
+    
 
 if __name__=="__main__":
     main()
