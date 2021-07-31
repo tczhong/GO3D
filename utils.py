@@ -4,6 +4,7 @@ from tensorflow import keras
 from tensorflow.keras import layers
 from matplotlib import pyplot as plt
 from sklearn.metrics import confusion_matrix
+import numpy as np
 
 def augment(points, label):
     # jitter points
