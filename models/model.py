@@ -53,7 +53,7 @@ class model_build():
 
         outputs = layers.Dense(self.NUM_CLASSES, activation="softmax")(x)
 
-        network = keras.Model(inputs=inputs, outputs=outputs, name="pointnet_mod")
+        network = keras.Model(inputs=inputs, outputs=outputs, name="pointnet")
 
         return network
 
